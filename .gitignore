@@ -32,6 +32,8 @@ yarn-error.log*
 
 # env files (clés secrètes — ne doivent jamais partir sur GitHub)
 .env*
+# ... sauf le fichier modèle, qui ne contient aucune vraie clé
+!.env.local.example
 
 # réglages locaux de Claude Code (propres à la machine)
 .claude/settings.local.json
