@@ -70,7 +70,7 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 5 — Cerveau des règles d'accès
+## Étape 5 — Cerveau des règles d'accès ✅ Terminée
 
 `src/lib/acces.js`, sur le modèle de `lib/abonnement.js` de BTA, mais simplifié : ici **pas d'exception** fondateur/établissement, tout le monde suit la même règle.
 
