@@ -47,7 +47,7 @@ Créer le projet Supabase (région Europe) et le schéma de données.
 
 ---
 
-## Étape 3 — Branchement Supabase
+## Étape 3 — Branchement Supabase ✅ Terminée
 
 Connecter le projet Next.js à Supabase.
 
