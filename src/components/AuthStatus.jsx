@@ -64,7 +64,9 @@ export default function AuthStatus() {
 
   return (
     <div className="auth-status">
-      {pseudo && <span className="pseudo">{pseudo}</span>}
+      <Link className="btn-ghost" href="/compte">
+        {pseudo || "Mon compte"}
+      </Link>
       <button className="btn-ghost danger" type="button" onClick={handleLogout}>
         Déconnexion
       </button>

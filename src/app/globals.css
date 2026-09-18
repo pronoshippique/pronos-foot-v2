@@ -624,6 +624,7 @@ footer {
   padding: 16px;
   font-size: 14px;
   line-height: 1.6;
+  margin-bottom: 16px;
 }
 
 .auth-links {
@@ -641,4 +642,60 @@ footer {
 
 .auth-links a:hover {
   text-decoration: underline;
+}
+
+/* ---- Espace compte (étape 7) ---- */
+.account-main {
+  padding: 48px 0 80px;
+}
+
+.account-col {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.account-col .auth-title {
+  margin-bottom: 20px;
+}
+
+.account-card {
+  background: linear-gradient(180deg, var(--surface), var(--bg-2));
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.account-card-title {
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.account-status {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.account-status[data-active="true"] {
+  color: var(--lime);
+}
+
+.account-price {
+  font-family: var(--font-anton), sans-serif;
+  font-size: 32px;
+  color: var(--lime);
+  margin-bottom: 16px;
+}
+
+.account-note {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 12px;
 }

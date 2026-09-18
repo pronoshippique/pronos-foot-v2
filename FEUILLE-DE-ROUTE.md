@@ -93,7 +93,7 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 7 — Paiement
+## Étape 7 — Paiement ✅ Terminée
 
 - Route `/api/abonnement/checkout` (façon BTA) : crée/réutilise le client Stripe du profil, ouvre une session Checkout `mode: "subscription"`
 - Point important vs BTA : `trial_period_days: 3` **et** `payment_method_collection: "always"` — la carte est demandée dès l'inscription, l'essai est géré par Stripe lui-même (pas par l'appli)

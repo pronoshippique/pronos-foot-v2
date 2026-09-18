@@ -33,3 +33,21 @@ export function abonnementActif(profile) {
 export function aAcces(profile) {
   return Boolean(lancementGratuit() || abonnementActif(profile));
 }
+
+// Libellé lisible du statut d'abonnement, pour l'affichage dans "Mon compte".
+export function libelleStatut(profile) {
+  switch (profile?.abonnement_statut) {
+    case "active":
+      return "Abonnement actif";
+    case "trialing":
+      return "Période d'essai";
+    case "past_due":
+      return "Paiement en retard";
+    case "unpaid":
+      return "Impayé";
+    case "canceled":
+      return "Abonnement résilié";
+    default:
+      return "Pas d'abonnement";
+  }
+}
