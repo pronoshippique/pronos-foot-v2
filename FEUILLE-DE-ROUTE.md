@@ -58,7 +58,7 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 4 — Inscription / connexion / mot de passe oublié
+## Étape 4 — Inscription / connexion / mot de passe oublié ✅ Terminée
 
 - Pages : inscription, connexion, mot-de-passe-oublié, nouveau-mot-de-passe (façon BTA)
 - Confirmation d'e-mail activée dans Supabase Auth + route `/auth/callback`

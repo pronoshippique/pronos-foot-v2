@@ -1,5 +1,6 @@
 "use client";
 import { LANG_CODES, LANG_FLAGS } from "@/lib/i18n";
+import AuthStatus from "@/components/AuthStatus";
 
 export default function Header({ lang, onLangChange }) {
   return (
@@ -24,6 +25,7 @@ export default function Header({ lang, onLangChange }) {
               </option>
             ))}
           </select>
+          <AuthStatus />
         </div>
       </div>
     </header>
