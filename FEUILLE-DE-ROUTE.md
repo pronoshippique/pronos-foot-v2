@@ -34,7 +34,7 @@ Créer le projet (App Router + Tailwind), reprendre le design et les textes de l
 
 ---
 
-## Étape 2 — Supabase + base
+## Étape 2 — Supabase + base ✅ Terminée
 
 Créer le projet Supabase (région Europe) et le schéma de données.
 
