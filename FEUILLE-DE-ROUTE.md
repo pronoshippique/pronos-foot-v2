@@ -83,7 +83,7 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 6 — Stripe produit + prix
+## Étape 6 — Stripe produit + prix ✅ Terminée
 
 - Créer le produit « Pronos Foot » et son prix récurrent mensuel **14,90 € TTC** dans le dashboard Stripe (mode test)
 - Script `scripts/setup-stripe.mjs` (façon BTA) pour créer/retrouver le produit et le prix automatiquement
