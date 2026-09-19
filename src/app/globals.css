@@ -375,6 +375,25 @@ h1 em {
   animation: fade 0.3s ease;
 }
 
+.lock {
+  margin-top: 14px;
+  border-top: 1px dashed var(--line-soft);
+  padding-top: 16px;
+  text-align: center;
+  animation: fade 0.3s ease;
+}
+
+.lock p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.lock .cta {
+  font-size: 13px;
+  padding: 10px 16px;
+}
+
 @keyframes fade {
   from {
     opacity: 0;

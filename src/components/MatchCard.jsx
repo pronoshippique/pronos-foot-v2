@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
+import { prixPrincipal } from "@/lib/prix";
 
 const LIVE_STATUSES = ["1H", "2H", "HT", "ET", "LIVE"];
 const FINISHED_STATUSES = ["FT", "AET", "PEN"];
@@ -8,6 +10,9 @@ export default function MatchCard({ fixture, lang, t }) {
   const [analysis, setAnalysis] = useState(null);
   const [loadingAnalysis, setLoadingAnalysis] = useState(false);
   const [analysisError, setAnalysisError] = useState("");
+  // Accès refusé (mur payant) : distinct d'une vraie erreur réseau/serveur,
+  // affiche un bloc "Débloquer" au lieu d'un message d'erreur brut.
+  const [locked, setLocked] = useState(false);
 
   const home = fixture.teams.home;
   const away = fixture.teams.away;
@@ -33,6 +38,7 @@ export default function MatchCard({ fixture, lang, t }) {
   async function generateAnalysis() {
     setLoadingAnalysis(true);
     setAnalysisError("");
+    setLocked(false);
     try {
       const r = await fetch("/api/pronos", {
         method: "POST",
@@ -48,7 +54,11 @@ export default function MatchCard({ fixture, lang, t }) {
       });
       const data = await r.json();
       if (!data.ok) {
-        setAnalysisError(data.error || t.errLoad);
+        if (data.locked) {
+          setLocked(true);
+        } else {
+          setAnalysisError(data.error || t.errLoad);
+        }
         return;
       }
       setAnalysis(data.prono);
@@ -100,6 +110,13 @@ export default function MatchCard({ fixture, lang, t }) {
 
       {analysis ? (
         <div className="prono">{analysis}</div>
+      ) : locked ? (
+        <div className="lock">
+          <p>🔒 {t.lockText}</p>
+          <Link className="cta" href="/compte">
+            {t.lockUnlock} · {prixPrincipal()}
+          </Link>
+        </div>
       ) : (
         <button className="ai-btn" type="button" onClick={generateAnalysis} disabled={loadingAnalysis}>
           {loadingAnalysis ? (

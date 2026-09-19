@@ -121,7 +121,7 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 10 — Fermeture de l'accès ✅ Terminée (verrou serveur ; l'interface de verrouillage visuelle reste à faire)
+## Étape 10 — Fermeture de l'accès ✅ Terminée (verrou serveur + interface de verrouillage visuelle)
 
 - Basculer `LANCEMENT_GRATUIT=false` : seules les analyses des comptes en essai (`trialing`) ou abonnés (`active`) restent accessibles
 - Interface de verrouillage sur les cartes de match (reprise du bloc `.lock` de l'ancienne version) : message + bouton « Débloquer · 14,90 €/mois »

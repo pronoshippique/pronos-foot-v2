@@ -50,6 +50,8 @@ export const TR = {
     linkCgv: "CGV / CGU",
     linkPrivacy: "Confidentialité",
     linkContact: "Contact",
+    lockText: "Abonne-toi pour débloquer les analyses IA.",
+    lockUnlock: "Débloquer",
   },
   en: {
     locale: "en-GB",
@@ -84,6 +86,8 @@ export const TR = {
     linkCgv: "Terms",
     linkPrivacy: "Privacy",
     linkContact: "Contact",
+    lockText: "Subscribe to unlock the AI analyses.",
+    lockUnlock: "Unlock",
   },
   es: {
     locale: "es-ES",
@@ -118,6 +122,8 @@ export const TR = {
     linkCgv: "Términos",
     linkPrivacy: "Privacidad",
     linkContact: "Contacto",
+    lockText: "Suscríbete para desbloquear los análisis de IA.",
+    lockUnlock: "Desbloquear",
   },
   pt: {
     locale: "pt-PT",
@@ -152,6 +158,8 @@ export const TR = {
     linkCgv: "Termos",
     linkPrivacy: "Privacidade",
     linkContact: "Contacto",
+    lockText: "Assina para desbloquear as análises de IA.",
+    lockUnlock: "Desbloquear",
   },
   ar: {
     locale: "ar",
@@ -186,6 +194,8 @@ export const TR = {
     linkCgv: "الشروط",
     linkPrivacy: "الخصوصية",
     linkContact: "اتصل بنا",
+    lockText: "اشترك لفتح تحليلات الذكاء الاصطناعي.",
+    lockUnlock: "افتح",
   },
   de: {
     locale: "de-DE",
@@ -220,6 +230,8 @@ export const TR = {
     linkCgv: "AGB",
     linkPrivacy: "Datenschutz",
     linkContact: "Kontakt",
+    lockText: "Abonniere, um die KI-Analysen freizuschalten.",
+    lockUnlock: "Freischalten",
   },
   it: {
     locale: "it-IT",
@@ -254,5 +266,7 @@ export const TR = {
     linkCgv: "Termini",
     linkPrivacy: "Privacy",
     linkContact: "Contatto",
+    lockText: "Abbonati per sbloccare le analisi IA.",
+    lockUnlock: "Sblocca",
   },
 };
