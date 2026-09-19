@@ -103,7 +103,7 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 8 — Webhook
+## Étape 8 — Webhook ✅ Terminée
 
 - Route `/api/stripe/webhook` (façon BTA) : vérifie la signature Stripe sur le corps brut, écoute `checkout.session.completed`, `customer.subscription.created/updated/deleted`
 - `src/lib/stripe-sync.js` : répercute `abonnement_statut`, `stripe_subscription_id`, `abonnement_fin` sur le profil via `service_role`
