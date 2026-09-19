@@ -3,7 +3,12 @@
 // Cache mémoire simple par match pour éviter de repayer plusieurs fois la
 // même analyse. IMPORTANT : le prompt interdit toute promesse de gain
 // (protection juridique — service d'information, pas de paris).
+//
+// Étape 10 : mur payant. On vérifie l'accès AVANT d'appeler Claude, pour ne
+// jamais payer une génération à quelqu'un qui n'a pas le droit d'y accéder.
 import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { aAcces } from "@/lib/abonnement";
 
 export const runtime = "nodejs";
 
@@ -20,6 +25,35 @@ const LANGS = {
 };
 
 export async function POST(request) {
+  // Mur payant : abonnement actif/essai en cours, ou LANCEMENT_GRATUIT allumé.
+  const supabase = await createClient();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
+
+  let profile = null;
+  if (authUser) {
+    const { data } = await supabase
+      .from("profiles")
+      .select("abonnement_statut")
+      .eq("id", authUser.id)
+      .maybeSingle();
+    profile = data;
+  }
+
+  if (!aAcces(profile)) {
+    return NextResponse.json(
+      {
+        ok: false,
+        locked: true,
+        error: authUser
+          ? "Abonne-toi pour débloquer les analyses IA."
+          : "Connecte-toi et abonne-toi pour débloquer les analyses IA.",
+      },
+      { status: 403 }
+    );
+  }
+
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) {
     return NextResponse.json(
