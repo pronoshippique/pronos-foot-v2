@@ -112,7 +112,7 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 9 — Résiliation via portail Stripe
+## Étape 9 — Résiliation via portail Stripe ✅ Terminée
 
 - Route `/api/abonnement/portal` (façon BTA) : ouvre une session du Billing Portal Stripe pour le client du profil
 - Bouton « Gérer mon abonnement » dans la page « Mon compte » (facture, carte, résiliation en libre-service)

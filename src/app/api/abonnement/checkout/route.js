@@ -66,6 +66,10 @@ export async function POST(request) {
       },
       // La carte est demandée dès l'inscription, même pendant l'essai.
       payment_method_collection: "always",
+      // Managed Payments (activé par défaut sur les nouveaux comptes Stripe)
+      // ajoute 3,5 % de frais par transaction et exige un "tax code" sur le
+      // produit qu'on ne veut pas gérer ici : on le désactive explicitement.
+      managed_payments: { enabled: false },
       success_url: `${origin}/compte?abonnement=ok`,
       cancel_url: `${origin}/compte?abonnement=annule`,
     });

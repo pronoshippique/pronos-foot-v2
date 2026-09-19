@@ -1,6 +1,8 @@
 "use client";
-// Carte "Abonnement" de l'espace compte (étape 7).
-// Affiche le prix, l'état de l'abonnement, et le bouton "S'abonner".
+// Carte "Abonnement" de l'espace compte (étapes 7 et 9).
+// Affiche le prix, l'état de l'abonnement, et selon le cas :
+//  - "S'abonner" (Stripe Checkout) si pas encore abonné,
+//  - "Gérer mon abonnement" (Stripe Billing Portal) si abonné ou en essai.
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { prixPrincipal } from "@/lib/prix";
@@ -46,6 +48,20 @@ export default function Abonnement({ profile, paiementActif, lancementGratuit, f
     }
   }
 
+  async function handleManage() {
+    setError("");
+    setBusy(true);
+    try {
+      const res = await fetch("/api/abonnement/portal", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Erreur.");
+      window.location.href = data.url;
+    } catch (e) {
+      setError(e.message);
+      setBusy(false);
+    }
+  }
+
   return (
     <div className="account-card">
       <div className="account-card-title">Abonnement</div>
@@ -71,9 +87,15 @@ export default function Abonnement({ profile, paiementActif, lancementGratuit, f
       {error && <div className="form-error">{error}</div>}
 
       {abonne ? (
-        <p className="account-note">
-          La gestion de l&apos;abonnement (facture, résiliation) arrivera bientôt sur cette page.
-        </p>
+        <>
+          <button className="btn-primary" type="button" onClick={handleManage} disabled={busy}>
+            {busy ? "Ouverture…" : "Gérer mon abonnement"}
+          </button>
+          <p className="account-note">
+            Factures, moyen de paiement, résiliation : tout se gère depuis l&apos;espace Stripe qui
+            s&apos;ouvre en cliquant ci-dessus.
+          </p>
+        </>
       ) : (
         <>
           <button
