@@ -131,21 +131,29 @@ Connecter le projet Next.js à Supabase.
 
 ---
 
-## Étape 11 — Mise en ligne Vercel
+## Étape 11 — Mise en ligne Vercel ✅ Terminée
 
 - Déploiement du projet sur Vercel, variables d'environnement de production renseignées (Supabase + Stripe **toujours en mode test** à ce stade)
 - Domaine branché, `APP_URL` mis à jour pour les redirections Stripe
 
 → **Vérifier** : le site est accessible en ligne à son domaine définitif, et tout ce qui a été validé aux étapes précédentes (inscription, paiement test, verrouillage) fonctionne en production.
 
+✔️ Fait : site en ligne sur `pronos-foot-v2.vercel.app`, les 10 variables d'environnement renseignées dans Vercel, Supabase reconfiguré pour l'URL de production, webhook Stripe de production fonctionnel (testé de bout en bout : inscription, paiement, statut "Période d'essai" mis à jour automatiquement, sans passer par le CLI).
+
 ---
 
 ## Étape 12 — Passage en mode réel
 
-- Remplacer les clés Stripe test par les clés **live**, recréer le produit/prix en live (ou utiliser le mode live de Stripe), reconfigurer le webhook live avec sa propre `STRIPE_WEBHOOK_SECRET`
-- `LANCEMENT_GRATUIT=false` de façon définitive
-- Vérification finale : mentions légales, avertissement jeu responsable (ANJ), CGV/CGU à jour avec l'essai de 3 jours et le prix 14,90 € TTC
-- Test d'un vrai abonnement avec une carte réelle, puis résiliation réelle via le portail, pour confirmer que tout le circuit fonctionne en conditions réelles
+⚠️ **À ne faire QUE juste avant le vrai lancement** (une fois la publicité Facebook/Instagram validée) — pas avant, pour ne pas ouvrir de vrais paiements ou dépenser du crédit IA/API-Football trop tôt.
+
+Check-list dans l'ordre :
+1. **Compléter le dossier Stripe pour le mode live** (informations de l'entreprise, IBAN, etc. — Stripe ne laisse pas activer les paiements réels sans ce dossier validé)
+2. **Basculer les clés Stripe de test → live** : nouvelles `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, **recréer le produit/prix en live** (relancer `npm run setup-stripe` avec les clés live → nouveau `STRIPE_PRICE_ID`), et **recréer le webhook en live** (nouvelle `STRIPE_WEBHOOK_SECRET`)
+3. **Prendre l'abonnement payant API-Football** (le plan gratuit ne suffira pas en production)
+4. **Recharger le crédit Anthropic** (compte API utilisé pour les analyses IA)
+5. **Passer `LANCEMENT_GRATUIT=false`** de façon définitive dans Vercel
+6. Vérification finale : mentions légales, avertissement jeu responsable (ANJ), CGV/CGU à jour avec l'essai de 3 jours et le prix 14,90 € TTC
+7. Test d'un vrai abonnement avec une carte réelle, puis résiliation réelle via le portail, pour confirmer que tout le circuit fonctionne en conditions réelles
 
 → **Vérifier** : un vrai paiement peut être souscrit et résilié en conditions réelles, sans intervention manuelle en base.
 
