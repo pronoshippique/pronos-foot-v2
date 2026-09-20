@@ -182,41 +182,18 @@ h1 em {
   font-size: 17px;
 }
 
-.countdown {
-  display: flex;
-  gap: 12px;
+.hero-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin-top: 28px;
-  flex-wrap: wrap;
-}
-
-.cd {
   background: var(--surface);
   border: 1px solid var(--line-soft);
-  border-radius: 14px;
-  padding: 14px 18px;
-  min-width: 78px;
-  text-align: center;
-}
-
-.cd .n {
-  font-family: var(--font-anton), sans-serif;
-  font-size: 34px;
-  line-height: 1;
+  border-radius: 12px;
+  padding: 12px 18px;
   color: var(--text);
-}
-
-.cd .l {
-  font-size: 11px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 6px;
-}
-
-.cd-note {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .tabs {
