@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { Anton, Archivo, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 
@@ -37,7 +38,10 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr" className={`${anton.variable} ${archivo.variable} ${notoArabic.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
