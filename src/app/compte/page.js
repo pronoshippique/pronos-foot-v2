@@ -18,7 +18,7 @@ export default async function ComptePage({ searchParams }) {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("pseudo, abonnement_statut, abonnement_fin")
+    .select("pseudo, abonnement_statut, abonnement_fin, created_at")
     .eq("id", user.id)
     .maybeSingle();
 

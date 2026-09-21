@@ -35,7 +35,7 @@ export async function POST(request) {
   if (authUser) {
     const { data } = await supabase
       .from("profiles")
-      .select("abonnement_statut")
+      .select("abonnement_statut, created_at")
       .eq("id", authUser.id)
       .maybeSingle();
     profile = data;

@@ -9,8 +9,9 @@
 --   - un seul type d'utilisateur, pas de rôle admin en base ;
 --   - pas de validation manuelle : le profil est créé automatiquement
 --     dès qu'un compte est créé ;
---   - l'essai gratuit de 3 jours est géré par Stripe lui-même
---     (statut "trialing"), on ne calcule aucune date d'essai ici ;
+--   - l'essai gratuit de 3 jours est géré CÔTÉ APPLI (lib/abonnement.js),
+--     à partir de `created_at` : pas de carte, pas de Stripe pendant
+--     l'essai. Stripe n'intervient qu'à la souscription réelle (payante) ;
 --   - tout est payant : aucune colonne "gratuit à vie" façon BTA.
 -- ============================================================
 

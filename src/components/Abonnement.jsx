@@ -6,7 +6,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { prixPrincipal } from "@/lib/prix";
-import { libelleStatut } from "@/lib/abonnement";
+import { libelleStatut, essaiActif, finEssai, joursRestantsEssai } from "@/lib/abonnement";
 
 export default function Abonnement({ profile, paiementActif, lancementGratuit, flash }) {
   const router = useRouter();
@@ -14,6 +14,9 @@ export default function Abonnement({ profile, paiementActif, lancementGratuit, f
   const [error, setError] = useState("");
 
   const abonne = ["active", "trialing"].includes(profile?.abonnement_statut);
+  const enEssai = essaiActif(profile);
+  const dateFinEssai = finEssai(profile);
+  const joursEssai = joursRestantsEssai(profile);
 
   // Au retour du paiement (?abonnement=ok), on demande à Stripe l'état réel
   // de l'abonnement et on rafraîchit — filet de sécurité en plus du webhook
@@ -82,6 +85,19 @@ export default function Abonnement({ profile, paiementActif, lancementGratuit, f
         <div className="form-success">
           Période de lancement : l&apos;accès est <b>gratuit pour l&apos;instant</b>. L&apos;abonnement
           deviendra nécessaire plus tard — tu peux déjà t&apos;abonner pour soutenir le service.
+        </div>
+      )}
+      {!lancementGratuit && !abonne && enEssai && (
+        <div className="form-success">
+          Essai gratuit en cours : encore {joursEssai} jour{joursEssai > 1 ? "s" : ""}, jusqu&apos;au{" "}
+          {dateFinEssai?.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" })}.
+          Aucune carte bancaire n&apos;est demandée pour l&apos;instant — tu peux t&apos;abonner dès
+          maintenant si tu préfères payer par avance.
+        </div>
+      )}
+      {!lancementGratuit && !abonne && !enEssai && (
+        <div className="form-error">
+          Ton essai gratuit est terminé. Abonne-toi pour continuer à profiter des analyses IA.
         </div>
       )}
       {error && <div className="form-error">{error}</div>}

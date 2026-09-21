@@ -1,8 +1,9 @@
 // Démarre un abonnement : crée (ou réutilise) le client Stripe du profil,
 // ouvre une session de paiement Stripe Checkout et renvoie son URL.
 // L'utilisateur est redirigé vers la page de paiement sécurisée hébergée par
-// Stripe, en français, avec l'essai de 3 jours et la carte demandée dès
-// l'inscription (l'essai est entièrement géré par Stripe, pas par l'appli).
+// Stripe, en français. L'essai gratuit de 3 jours sans carte est géré par
+// l'appli elle-même (voir lib/abonnement.js) : ce checkout ne propose plus
+// d'essai Stripe, la carte est débitée dès la souscription.
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -60,12 +61,10 @@ export async function POST(request) {
       client_reference_id: user.id,
       allow_promotion_codes: true,
       locale: "fr",
-      subscription_data: {
-        // Essai de 3 jours géré par Stripe (voir décisions actées).
-        trial_period_days: 3,
-      },
-      // La carte est demandée dès l'inscription, même pendant l'essai.
-      payment_method_collection: "always",
+      // Pas d'essai Stripe : l'essai gratuit de 3 jours est déjà géré côté
+      // appli (sans carte). Arriver ici veut dire que l'essai maison est
+      // terminé (ou que l'utilisateur choisit de payer par anticipation) —
+      // la souscription démarre donc immédiatement.
       // Managed Payments (activé par défaut sur les nouveaux comptes Stripe)
       // ajoute 3,5 % de frais par transaction et exige un "tax code" sur le
       // produit qu'on ne veut pas gérer ici : on le désactive explicitement.
