@@ -42,13 +42,17 @@ export async function POST(request) {
   }
 
   if (!aAcces(profile)) {
+    // "auth" : visiteur non connecté -> on l'invite à créer un compte
+    // (essai gratuit de 3 jours, sans carte). "abonnement" : connecté mais
+    // essai terminé et pas d'abonnement actif -> là seulement, Stripe.
     return NextResponse.json(
       {
         ok: false,
         locked: true,
+        reason: authUser ? "abonnement" : "auth",
         error: authUser
           ? "Abonne-toi pour débloquer les analyses IA."
-          : "Connecte-toi et abonne-toi pour débloquer les analyses IA.",
+          : "Crée un compte gratuit pour débloquer les analyses IA.",
       },
       { status: 403 }
     );

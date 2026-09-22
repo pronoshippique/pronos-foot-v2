@@ -10,9 +10,13 @@ export default function MatchCard({ fixture, lang, t }) {
   const [analysis, setAnalysis] = useState(null);
   const [loadingAnalysis, setLoadingAnalysis] = useState(false);
   const [analysisError, setAnalysisError] = useState("");
-  // Accès refusé (mur payant) : distinct d'une vraie erreur réseau/serveur,
-  // affiche un bloc "Débloquer" au lieu d'un message d'erreur brut.
-  const [locked, setLocked] = useState(false);
+  // Accès refusé (mur payant) : distinct d'une vraie erreur réseau/serveur.
+  // Deux cas bien différents (voir /api/pronos) :
+  //  - "auth"       : visiteur non connecté -> invitation à s'inscrire
+  //                    gratuitement (essai 3 jours sans carte) ;
+  //  - "abonnement" : connecté mais essai terminé et pas d'abonnement actif
+  //                    -> là seulement, on propose Stripe.
+  const [lockReason, setLockReason] = useState(null);
 
   const home = fixture.teams.home;
   const away = fixture.teams.away;
@@ -38,7 +42,7 @@ export default function MatchCard({ fixture, lang, t }) {
   async function generateAnalysis() {
     setLoadingAnalysis(true);
     setAnalysisError("");
-    setLocked(false);
+    setLockReason(null);
     try {
       const r = await fetch("/api/pronos", {
         method: "POST",
@@ -55,7 +59,7 @@ export default function MatchCard({ fixture, lang, t }) {
       const data = await r.json();
       if (!data.ok) {
         if (data.locked) {
-          setLocked(true);
+          setLockReason(data.reason === "auth" ? "auth" : "abonnement");
         } else {
           setAnalysisError(data.error || t.errLoad);
         }
@@ -110,7 +114,17 @@ export default function MatchCard({ fixture, lang, t }) {
 
       {analysis ? (
         <div className="prono">{analysis}</div>
-      ) : locked ? (
+      ) : lockReason === "auth" ? (
+        <div className="lock lock-free">
+          <p>🎁 {t.lockFreeText}</p>
+          <Link className="cta" href="/inscription">
+            {t.freeBtn}
+          </Link>
+          <p className="lock-sub">
+            {t.lockFreeSub} {prixPrincipal()}
+          </p>
+        </div>
+      ) : lockReason === "abonnement" ? (
         <div className="lock">
           <p>🔒 {t.lockText}</p>
           <Link className="cta" href="/compte">

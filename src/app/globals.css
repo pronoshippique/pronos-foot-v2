@@ -196,6 +196,31 @@ h1 em {
   font-weight: 600;
 }
 
+/* ---- Bannière "essai gratuit" (visiteurs non connectés) ---- */
+.hero-trial-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  background: var(--lime);
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: #0a0f0c;
+}
+
+.hero-trial-banner span {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.hero-trial-banner .cta {
+  background: #0a0f0c;
+  color: var(--lime);
+  flex-shrink: 0;
+}
+
 .tabs {
   display: flex;
   gap: 8px;
@@ -369,6 +394,12 @@ h1 em {
 .lock .cta {
   font-size: 13px;
   padding: 10px 16px;
+}
+
+.lock p.lock-sub {
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 12px;
 }
 
 @keyframes fade {

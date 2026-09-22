@@ -5,7 +5,12 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 const COMPETITIONS = {
-  wc: { league: 1, season: 2026 }, // Coupe du Monde 2026
+  // Pas de `season` fixe pour la Coupe du Monde : avec `season: 2026`, cette
+  // route continuait de renvoyer les matchs de juin 2026 (déjà joués) une
+  // fois le tournoi terminé. Sans `season`, elle tombe dans le cas général
+  // ci-dessous (`next: 20`) et ne renvoie que les prochains matchs — donc
+  // rien tant qu'aucune Coupe du Monde n'est programmée, ce qui est correct.
+  wc: { league: 1 },
   l1: { league: 61 }, // Ligue 1
   pl: { league: 39 }, // Premier League
   liga: { league: 140 }, // La Liga

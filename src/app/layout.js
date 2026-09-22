@@ -22,9 +22,9 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 export const metadata = {
-  title: "Pronos Foot — Coupe du Monde 2026",
+  title: "Pronos Foot — Analyses IA du football",
   description:
-    "Matchs, tendances et analyses d'avant-match propulsées par l'IA — Mondial 2026 et grands championnats européens, mis à jour en continu.",
+    "Matchs, tendances et analyses d'avant-match propulsées par l'IA — Ligue 1, Premier League, Liga, Serie A, Bundesliga et grands championnats européens, mis à jour en continu.",
   icons: {
     icon: "/icon-192.png",
     apple: "/icon-192.png",

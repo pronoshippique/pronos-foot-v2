@@ -1,7 +1,10 @@
 "use client";
 
-// Mondial 2026 terminé : le site se recentre sur les championnats en cours.
-// L'onglet Coupe du Monde est gardé (au cas où), mais relégué en dernier.
+// Mondial 2026 terminé, prochain en 2030 : l'onglet Coupe du Monde est
+// retiré tant qu'aucune Coupe du Monde n'est en cours (il affichait sinon
+// les matchs de juin 2026, déjà joués). Le site se recentre sur les
+// championnats en cours. La route /api/matches?comp=wc existe toujours
+// côté serveur, prête à être réactivée le jour venu.
 export const COMPETITIONS = [
   { id: "today", labelKey: "tabToday" },
   { id: "l1", label: "Ligue 1" },
@@ -9,7 +12,6 @@ export const COMPETITIONS = [
   { id: "liga", label: "La Liga" },
   { id: "seriea", label: "Serie A" },
   { id: "bundes", label: "Bundesliga" },
-  { id: "wc", labelKey: "tabWc" },
 ];
 
 export default function Tabs({ active, onChange, t }) {

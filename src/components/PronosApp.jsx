@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { TR } from "@/lib/i18n";
+import { createClient } from "@/lib/supabase/client";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Tabs from "@/components/Tabs";
@@ -9,6 +10,22 @@ import Footer from "@/components/Footer";
 
 export default function PronosApp() {
   const [lang, setLang] = useState("fr");
+  // "loading" tant qu'on ne sait pas encore -> on n'affiche la bannière
+  // d'inscription gratuite que quand on est SÛR que le visiteur n'est pas
+  // connecté, pour éviter un flash chez les utilisateurs déjà connectés.
+  const [authState, setAuthState] = useState("loading"); // loading | in | out
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data: { user } }) => setAuthState(user ? "in" : "out"));
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAuthState(session?.user ? "in" : "out");
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
   // Mondial 2026 terminé : on ouvre sur "Matchs du jour" plutôt que sur la
   // Coupe du Monde. Si "Matchs du jour" est vide au tout premier chargement,
   // on bascule automatiquement (une seule fois) sur Ligue 1 — voir plus bas.
@@ -87,7 +104,7 @@ export default function PronosApp() {
     <>
       <Header lang={lang} onLangChange={setLang} />
       <main className="wrap">
-        <Hero t={t} />
+        <Hero t={t} showFreeBanner={authState === "out"} />
         <Tabs active={comp} onChange={setComp} t={t} />
         <MatchesGrid fixtures={fixtures} status={status} errorMsg={errorMsg} lang={lang} t={t} />
       </main>
