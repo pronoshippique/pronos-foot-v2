@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import { Anton, Archivo, Noto_Sans_Arabic } from "next/font/google";
+import RegisterServiceWorker from "@/components/RegisterServiceWorker";
 import "./globals.css";
 
 // Polices de l'ancienne version, auto-hébergées par Next.js (plus de <link> Google Fonts).
@@ -29,6 +30,16 @@ export const metadata = {
     icon: "/icon-192.png",
     apple: "/icon-192.png",
   },
+  // PWA installable : le manifest lui-même vient de app/manifest.js (lié
+  // automatiquement dans le <head> par convention Next.js). appleWebApp
+  // couvre en plus ce que le manifest ne gère pas bien sur iOS/Safari
+  // (mode plein écran sans barre d'adresse à l'ouverture depuis l'écran
+  // d'accueil).
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Pronos Foot",
+  },
 };
 
 export const viewport = {
@@ -41,6 +52,7 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <Analytics />
+        <RegisterServiceWorker />
       </body>
     </html>
   );
