@@ -7,13 +7,21 @@ import Hero from "@/components/Hero";
 import Tabs from "@/components/Tabs";
 import MatchesGrid from "@/components/MatchesGrid";
 import Footer from "@/components/Footer";
+import WelcomeModal from "@/components/WelcomeModal";
+
+// Clé localStorage : une fois l'écran de bienvenue fermé, on ne le
+// remontre plus jamais sur cet appareil (taux de rebond élevé -> on ne
+// veut pas non plus agacer les visiteurs qui reviennent).
+const WELCOME_SEEN_KEY = "pf_welcome_seen";
 
 export default function PronosApp() {
   const [lang, setLang] = useState("fr");
   // "loading" tant qu'on ne sait pas encore -> on n'affiche la bannière
-  // d'inscription gratuite que quand on est SÛR que le visiteur n'est pas
-  // connecté, pour éviter un flash chez les utilisateurs déjà connectés.
+  // d'inscription gratuite (et l'écran de bienvenue) que quand on est SÛR
+  // que le visiteur n'est pas connecté, pour éviter un flash chez les
+  // utilisateurs déjà connectés.
   const [authState, setAuthState] = useState("loading"); // loading | in | out
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -25,6 +33,26 @@ export default function PronosApp() {
     });
     return () => subscription.unsubscribe();
   }, []);
+
+  // Affiche l'écran de bienvenue une seule fois par visiteur non connecté.
+  useEffect(() => {
+    if (authState !== "out") return;
+    try {
+      if (!window.localStorage.getItem(WELCOME_SEEN_KEY)) setShowWelcome(true);
+    } catch {
+      // localStorage indisponible : tant pis, on ne montre pas la modale
+      // plutôt que de risquer de la montrer à chaque visite.
+    }
+  }, [authState]);
+
+  function closeWelcome() {
+    setShowWelcome(false);
+    try {
+      window.localStorage.setItem(WELCOME_SEEN_KEY, "1");
+    } catch {
+      // idem
+    }
+  }
 
   // Mondial 2026 terminé : on ouvre sur "Matchs du jour" plutôt que sur la
   // Coupe du Monde. Si "Matchs du jour" est vide au tout premier chargement,
@@ -102,6 +130,7 @@ export default function PronosApp() {
 
   return (
     <>
+      {showWelcome && <WelcomeModal t={t} onClose={closeWelcome} />}
       <Header lang={lang} onLangChange={setLang} />
       <main className="wrap">
         <Hero t={t} showFreeBanner={authState === "out"} />
